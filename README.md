@@ -1,9 +1,5 @@
 # Foundry NFT
 
-This is a section of the Cyfrin Foundry Solidity Course.
-
-*[⭐️ (7:40:56) | Lesson 11: Foundry NFT](https://www.youtube.com/watch?v=sas02qSFZ74&t=27656s)*
-
 We go through creating 2 different kinds of NFTs.
 
 1. An IPFS Hosted NFT 
@@ -193,9 +189,7 @@ forge fmt
 
 If you appreciated this, feel free to follow me or donate!
 
-ETH/Arbitrum/Optimism/Polygon/etc Address: 0x9680201d9c93d65a3603d2088d125e955c73BD65
+ETH/Arbitrum/Optimism/Polygon/etc Address: 0x5E92A688387d317BE3DB80258e199094a0C2a462
 
-[![Patrick Collins Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/PatrickAlphaC)
-[![Patrick Collins YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA)
-[![Patrick Collins Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/patrickalphac/)
-[![Patrick Collins Medium](https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@patrick.collins_58673/)
+[![Patrick Collins Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/ronaldkohhh)
+[![Patrick Collins Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ronald-koh/)
