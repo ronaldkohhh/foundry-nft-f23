@@ -1,21 +1,29 @@
-# Foundry DeFi Stablecoin
+# Foundry NFT
 
 This is a section of the Cyfrin Foundry Solidity Course.
 
-[DSCEngine Example](https://sepolia.etherscan.io/address/0x091ea0838ebd5b7dda2f2a641b068d6d59639b98#code)
-[Decentralized Stablecoin Example](https://sepolia.etherscan.io/address/0xf30021646269007b0bdc0763fd736c6380602f2f#code)
+*[⭐️ (7:40:56) | Lesson 11: Foundry NFT](https://www.youtube.com/watch?v=sas02qSFZ74&t=27656s)*
 
-# About
+We go through creating 2 different kinds of NFTs.
 
-This project is meant to be a stablecoin where users can deposit WETH and WBTC in exchange for a token that will be pegged to the USD.
+1. An IPFS Hosted NFT 
+2. An SVG NFT (Hosted 100% on-chain) 
 
-- [Foundry DeFi Stablecoin](#foundry-defi-stablecoin)
-- [About](#about)
+<br/>
+<p align="center">
+<img src="./images/dogNft/pug.png" width="225" alt="NFT Pug">
+<img src="./images/dynamicNft/happy.svg" width="225" alt="NFT Happy">
+<img src="./images/dogNft/shiba-inu.png" width="225" alt="NFT Shiba">
+<img src="./images/dynamicNft/sad.svg" width="225" alt="NFT Frown">
+<img src="./images/dogNft/st-bernard.png" width="225" alt="NFT St.Bernard">
+</p>
+<br/>
+
+- [Foundry NFT](#foundry-nft)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
     - [Optional Gitpod](#optional-gitpod)
-- [Updates](#updates)
 - [Usage](#usage)
   - [Start a local node](#start-a-local-node)
   - [Deploy](#deploy)
@@ -24,6 +32,7 @@ This project is meant to be a stablecoin where users can deposit WETH and WBTC i
     - [Test Coverage](#test-coverage)
 - [Deployment to a testnet or mainnet](#deployment-to-a-testnet-or-mainnet)
   - [Scripts](#scripts)
+  - [Base64](#base64)
   - [Estimate gas](#estimate-gas)
 - [Formatting](#formatting)
 - [Thank you!](#thank-you)
@@ -37,11 +46,13 @@ This project is meant to be a stablecoin where users can deposit WETH and WBTC i
 - [foundry](https://getfoundry.sh/)
   - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
 
+
 ## Quickstart
 
 ```
-git clone https://github.com/Cyfrin/foundry-defi-stablecoin-f23
-cd foundry-defi-stablecoin-f23
+git clone https://github.com/Cyfrin/foundry-nft-f23
+cd foundry-nft-f23
+forge install
 forge build
 ```
 
@@ -49,10 +60,7 @@ forge build
 
 If you can't or don't want to run and install locally, you can work with this repo in Gitpod. If you do this, you can skip the `clone this repo` part.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/PatrickAlphaC/foundry-smart-contract-lottery-f23)
-
-# Updates
-- The latest version of openzeppelin-contracts has changes in the ERC20Mock file. To follow along with the course, you need to install version 4.8.3 which can be done by ```forge install openzeppelin/openzeppelin-contracts@v4.8.3 --no-commit``` instead of ```forge install openzeppelin/openzeppelin-contracts --no-commit```
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/PatrickAlphaC/foundry-foundry-nft-f23)
 
 # Usage
 
@@ -83,22 +91,22 @@ We talk about 4 test tiers in the video.
 3. Forked
 4. Staging
 
-In this repo we cover #1 and Fuzzing. 
+This repo we cover #1 and #3. 
 
 ```
 forge test
+```
+
+or 
+
+```
+forge test --fork-url $SEPOLIA_RPC_URL
 ```
 
 ### Test Coverage
 
 ```
 forge coverage
-```
-
-and for coverage based testing: 
-
-```
-forge coverage --report debug
 ```
 
 
@@ -110,42 +118,54 @@ You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment varia
 
 - `PRIVATE_KEY`: The private key of your account (like from [metamask](https://metamask.io/)). **NOTE:** FOR DEVELOPMENT, PLEASE USE A KEY THAT DOESN'T HAVE ANY REAL FUNDS ASSOCIATED WITH IT.
   - You can [learn how to export it here](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key).
-- `SEPOLIA_RPC_URL`: This is url of the sepolia testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
+- `SEPOLIA_RPC_URL`: This is url of the goerli testnet node you're working with. You can get setup with one for free from [Alchemy](https://alchemy.com/?a=673c802981)
 
 Optionally, add your `ETHERSCAN_API_KEY` if you want to verify your contract on [Etherscan](https://etherscan.io/).
 
 1. Get testnet ETH
 
-Head over to [faucets.chain.link](https://faucets.chain.link/) and get some testnet ETH. You should see the ETH show up in your metamask.
+Head over to [faucets.chain.link](https://faucets.chain.link/) and get some tesnet ETH. You should see the ETH show up in your metamask.
 
-2. Deploy
+2. Deploy (IPFS NFT)
 
 ```
 make deploy ARGS="--network sepolia"
 ```
 
+3. Deploy (SVG NFT)
+
+```
+make deploySvg ARGS="--network sepolia"
+```
+
 ## Scripts
 
-Instead of scripts, we can directly use the `cast` command to interact with the contract. 
+After deploy to a testnet or local net, you can run the scripts. 
 
-For example, on Sepolia:
-
-1. Get some WETH 
+Using cast deployed locally example: 
 
 ```
-cast send 0xdd13E55209Fd76AfE204dBda4007C227904f0a81 "deposit()" --value 0.1ether --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY
+cast send <RAFFLE_CONTRACT_ADDRESS> "enterRaffle()" --value 0.1ether --private-key <PRIVATE_KEY> --rpc-url $SEPOLIA_RPC_URL
 ```
 
-2. Approve the WETH
+or, to create a ChainlinkVRF Subscription:
 
 ```
-cast send 0xdd13E55209Fd76AfE204dBda4007C227904f0a81 "approve(address,uint256)" 0x091EA0838eBD5b7ddA2F2A641B068d6D59639b98 1000000000000000000 --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY
+make createSubscription ARGS="--network sepolia"
 ```
 
-3. Deposit and Mint DSC
+## Base64
+
+To get the base64 of an image, you can use the following command:
 
 ```
-cast send 0x091EA0838eBD5b7ddA2F2A641B068d6D59639b98 "depositCollateralAndMintDsc(address,uint256,uint256)" 0xdd13E55209Fd76AfE204dBda4007C227904f0a81 100000000000000000 10000000000000000 --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY
+echo "data:image/svg+xml;base64,$(base64 -i ./images/dynamicNft/happy.svg)"
+```
+
+Then, you can get the base64 encoding of the json object by placing the imageURI into `happy_image_uri.json` then running:
+
+```
+echo "data:application/json;base64,$(base64 -i ./images/dynamicNft/happy_image_uri.json)"
 ```
 
 
@@ -157,7 +177,7 @@ You can estimate how much gas things cost by running:
 forge snapshot
 ```
 
-And you'll see an output file called `.gas-snapshot`
+And you'll see and output file called `.gas-snapshot`
 
 
 # Formatting
